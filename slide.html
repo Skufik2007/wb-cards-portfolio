@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Слайд</title>
+<link rel="stylesheet" href="css/slides.css">
+<style>html,body{margin:0;padding:0;width:900px;height:1200px;overflow:hidden}</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="js/art.js"></script>
+<script src="js/data.js"></script>
+<script src="js/templates.js"></script>
+<script src="js/render.js"></script>
+<script>
+  const q = new URLSearchParams(location.search);
+  const p = findProduct(q.get('id') || PRODUCTS[0].id);
+  document.getElementById('root').innerHTML = renderSlide(p, +(q.get('s') || 1));
+</script>
+</body>
+</html>

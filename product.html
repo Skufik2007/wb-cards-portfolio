@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Карточка товара</title>
+<link rel="stylesheet" href="css/slides.css">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">&larr; Все карточки</a>
+  <div class="prod">
+    <div>
+      <div class="slides" id="slides"></div>
+    </div>
+    <div class="text" id="text"></div>
+  </div>
+</div>
+<script src="js/art.js"></script>
+<script src="js/data.js"></script>
+<script src="js/templates.js"></script>
+<script src="js/render.js"></script>
+<script>
+  const id = new URLSearchParams(location.search).get('id');
+  const p = findProduct(id) || PRODUCTS[0];
+  document.title = p.title;
+  const names = ['Обложка', 'Преимущества', p.details.title];
+  document.getElementById('slides').innerHTML = [1, 2, 3].map((n) => `
+    <div>
+      <div class="frame">${renderSlide(p, n)}</div>
+      <div class="frame-cap"><span>${n}. ${names[n - 1]}</span><a href="img/${p.id}-${n}.png" download>PNG 900x1200</a></div>
+    </div>`).join('');
+
+  function fit() {
+    document.querySelectorAll('.frame').forEach((f) => {
+      f.firstElementChild.style.transform = `scale(${f.clientWidth / 900})`;
+    });
+  }
+  addEventListener('resize', fit); fit();
+
+  if (p.art === 'placeholder') {
+    document.getElementById('text').innerHTML = `<h2>Шаблон</h2><div class="title">${p.name}</div>
+      <p style="margin-top:14px">Пустой макет из трех слайдов 900x1200: обложка, преимущества и ${p.details.title.toLowerCase()}. Вместо подписей подставляются данные вашего товара, в рамку ставится фото без фона.</p>
+      <p>Цвета, шрифт и порядок слайдов меняются под бренд.</p>`;
+  } else document.getElementById('text').innerHTML = `
+    <h2>${p.cat}</h2>
+    <div class="title">${p.title}</div>
+    <div class="count">${p.title.length} символов из 60</div>
+    <h2>Описание</h2>${p.desc.map((d) => `<p>${d}</p>`).join('')}
+    <h2>Характеристики</h2>
+    <table>${p.specs.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('')}</table>
+    <h2>Ключевые запросы в тексте</h2><p class="count">${p.keys}</p>
+    <p class="note">Товар и бренд вымышлены, карточка сделана как пример работы.</p>`;
+</script>
+</body>
+</html>

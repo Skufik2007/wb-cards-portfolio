@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Карточки для Wildberries: примеры работ</title>
+<meta name="description" content="Портфолио: инфографика и SEO-тексты для карточек товаров на Wildberries.">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <h1>Карточки товаров<br>для Wildberries</h1>
+    <p>Примеры работ: инфографика 900x1200 и тексты для карточек в разных категориях. В каждой карточке три слайда (обложка, преимущества, размеры или состав), SEO-название до 60 символов, продающее описание и характеристики.</p>
+    <p>Нажмите на карточку, чтобы посмотреть все слайды и текст.</p>
+    <div class="pills"><span>Инфографика 3:4</span><span>SEO-название</span><span>Описание с ключами</span><span>Характеристики</span><span>Массовое оформление</span></div>
+  </header>
+  <h2 class="sec">Примеры карточек</h2>
+  <div class="grid" id="grid"></div>
+  <h2 class="sec" id="templates">Шаблоны без товара</h2>
+  <p class="sec-p">Пустые макеты с местом под фото: из них собираются карточки для ваших товаров.</p>
+  <div class="grid" id="tpl"></div>
+  <footer>Товары и бренды в примерах вымышлены. Иллюстрации нарисованы специально для портфолио.</footer>
+</div>
+<script src="js/data.js"></script>
+<script src="js/templates.js"></script>
+<script>
+  document.getElementById('grid').innerHTML = PRODUCTS.map((p) => `
+    <a class="card" href="product.html?id=${p.id}">
+      <img src="img/${p.id}-1.png" alt="${p.title}" loading="lazy">
+      <div class="meta"><div class="cat">${p.cat}</div><div class="name">${p.title}</div></div>
+    </a>`).join('');
+  document.getElementById('tpl').innerHTML = TEMPLATES.map((p) => `
+    <a class="card" href="product.html?id=${p.id}">
+      <img src="img/${p.id}-1.png" alt="${p.name}" loading="lazy">
+      <div class="meta"><div class="cat">Шаблон, 3 слайда</div><div class="name">${p.name}</div></div>
+    </a>`).join('');
+</script>
+</body>
+</html>
